@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Searchbar from './Searchbar/Searchbar';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
@@ -9,8 +9,6 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Button from './Button/Button';
 import Modal from './Modal/Modal';
 import Loader from './Loader/Loader';
-import { useState } from 'react';
-import { useEffect } from 'react';
 
 const App = () => {
   const [requestForFind, setRequestForFind] = useState('');
@@ -49,9 +47,10 @@ const App = () => {
         .then(response => response.json())
         .then(images => {
           if (images.hits.length !== 0) {
-            setImages(prevImages => 
-              [...prevImages, ...getNormalizedImages(images.hits)]
-            );
+            setImages(prevImages => [
+              ...prevImages,
+              ...getNormalizedImages(images.hits),
+            ]);
             setIsLoadMoreBtnVisible(page < Math.ceil(images.totalHits / 12));
           } else throw new Error('Sorry, there are no images ...');
         })
@@ -92,10 +91,7 @@ const App = () => {
         <Button onClick={handleLoadMoreClick}></Button>
       )}
       {isModalVisible && (
-        <Modal
-          dataForModal={dataForModal}
-          onClose={toggleModal}
-        />
+        <Modal dataForModal={dataForModal} onClose={toggleModal} />
       )}
       <ToastContainer autoClose={3000} />
     </div>
