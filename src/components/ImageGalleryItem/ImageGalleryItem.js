@@ -3,7 +3,6 @@ import '../../components/styles.scss';
 import PropTypes from 'prop-types';
 
 const ImageGalleryItem = ({ src, alt, largeSrc, onClick }) => {
-  console.log('largeSrc', largeSrc);
   return (
     <li className="ImageGalleryItem">
       <img src={src} alt={alt} data-srcjs={largeSrc} onClick={onClick} />
